@@ -5,7 +5,6 @@ const indexRouter = express.Router();
 
 /* GET home page. */
 indexRouter.get('/', (req, res) => {
-  console.log(testEnvironmentVariable);
   res.status(200).json({ message: testEnvironmentVariable });
 });
 
