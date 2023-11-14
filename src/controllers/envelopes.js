@@ -1,0 +1,1 @@
+export const allEnvelopesPage = (req, res) => res.status(200).json({ message: 'Envelopes live here.'}); 
