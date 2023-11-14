@@ -1,6 +1,6 @@
 environment: 
   matrix:
-  - nodejs_versions: "12"
+  - nodejs_versions: "14"
 
 install:
   - yarn
