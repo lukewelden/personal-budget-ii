@@ -1,0 +1,21 @@
+language: node_js
+env:
+  global:
+    - CC_TEST_REPORTER_ID=018a8e856d3b4a3846a71967838c9c895c1b4fa6cc8671d3b8b143517cc9dba8
+
+matrix:
+  include:
+    - node_js: '12'
+cache:
+  directories: [node_modules]
+install:
+  yarn
+after_success: yarn coverage
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-tester-reporter
+  - ./cc-tester-reporter before-build
+script: 
+  - yarn test
+after_script: 
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESUL
