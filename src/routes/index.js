@@ -1,11 +1,11 @@
 import express from 'express';
 import { indexPage, envelopesPage, addEnvelope } from '../controllers/index.js';
-import { validateBudget } from '../middleware/index.js';
+import { validateBudget, performAsyncAction } from '../middleware/index.js';
 
 const indexRouter = express.Router();
 
 indexRouter.get('/', indexPage);
 indexRouter.get('/envelopes', envelopesPage);
-indexRouter.post('/envelopes', validateBudget, addEnvelope); 
+indexRouter.post('/envelopes', validateBudget, performAsyncAction, addEnvelope); 
 
 export default indexRouter;

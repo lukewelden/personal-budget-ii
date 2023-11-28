@@ -11,4 +11,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/v1', indexRouter); 
 
+// Error handler
+app.use((err, req, res, next) => {
+    res.status(err.status || 500).json({error: err.stack,});
+});
+
 export default app;
