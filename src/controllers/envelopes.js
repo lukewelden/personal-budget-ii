@@ -4,7 +4,7 @@ const envelopesModel = new Model('envelopes');
 
 export const envelopesPage = async (req, res) => {
     try {
-        const data = await envelopesModel.select('category, budget'); 
+        const data = await envelopesModel.select('id, category, budget'); 
         res.status(200).json({ envelopes: data.rows });
     } catch (err) {
         res.status(200).json({ envelopes: err.stack }); 
@@ -17,6 +17,19 @@ export const addEnvelope = async (req, res) => {
     const values = `'${category}', '${budget}'`;
     try {
         const data = await envelopesModel.insertWithReturn(columns, values);
+        res.status(200).json({ envelopes: data.rows });
+    } catch (err) {
+        res.status(200).json({ envelopes: err.stack }); 
+    }
+};
+
+export const getEnvelopeById = async (req, res) => {
+    const { envelopeId } = req.params;
+    console.log(envelopeId);
+    console.log(typeof(envelopeId));
+    const clause = ` WHERE id = ${envelopeId}`;
+    try {
+        const data = await envelopesModel.select('id, category, budget', clause); 
         res.status(200).json({ envelopes: data.rows });
     } catch (err) {
         res.status(200).json({ envelopes: err.stack }); 
