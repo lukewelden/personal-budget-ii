@@ -32,6 +32,12 @@ class Model {
     query += ' RETURNING id, category, budget;';
     return this.pool.query(query);
   }
+
+  async delete(clause) {
+    const query = `DELETE FROM ${this.table}${clause}`;
+    return this.pool.query(query);
+  }
+  
 }
 
 export default Model;

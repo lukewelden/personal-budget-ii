@@ -78,4 +78,15 @@ describe('Envelopes', () => {
                 done();
             });
     });
+    it('deletes a single envelope', done => {
+        const envelopeId = 1;
+        server
+            .delete(`${BASE_URL}/envelopes/${envelopeId}`)
+            .expect(200)
+            .end((err, res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body.envelopes).to.be.instanceOf(Array);
+                done();
+            });   
+    });
 });

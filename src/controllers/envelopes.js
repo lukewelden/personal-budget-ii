@@ -49,4 +49,15 @@ export const updateEnvelope = async (req, res) => {
     } catch (err) {
         res.status(200).json({ envelopes: err.stack }); 
     }
+};
+
+export const deleteEnvelope = async (req, res) => {
+    const { envelopeId } = req.params;
+    const clause = ` WHERE id = ${envelopeId}`;
+    try {
+        const data = await envelopesModel.delete(clause);
+        res.status(200).json({ envelopes: data.rows });
+    } catch (err) {
+        res.status(200).json({ envelopes: err.stack }); 
+    }
 }
