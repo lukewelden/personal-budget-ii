@@ -34,4 +34,19 @@ export const getEnvelopeById = async (req, res) => {
     } catch (err) {
         res.status(200).json({ envelopes: err.stack }); 
     }
+
+};
+
+export const updateEnvelope = async (req, res) => {
+    const { envelopeId } = req.params;
+    const { category, budget } = req.body;
+    const columns = ['category', 'budget'];
+    const values = [category, budget];
+    const clause = ` WHERE id = ${envelopeId}`;
+    try {
+        const data = await envelopesModel.update(columns, values, clause);
+        res.status(200).json({ envelopes: data.rows });
+    } catch (err) {
+        res.status(200).json({ envelopes: err.stack }); 
+    }
 }

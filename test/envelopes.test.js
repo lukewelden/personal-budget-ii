@@ -60,4 +60,22 @@ describe('Envelopes', () => {
                 done();
             });
     });
+    it('updates a single envelope', done => {
+        const envelopeId = 1;
+        const data = { category: 'mortgage', budget: '450.00' };
+        server
+            .put(`${BASE_URL}/envelopes/${envelopeId}`)
+            .send(data)
+            .expect(200)
+            .end((err, res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body.envelopes).to.be.instanceOf(Array);
+                res.body.envelopes.forEach(e => {
+                    expect(e).to.have.property('id', envelopeId);
+                    expect(e).to.have.property('category', data.category);
+                    expect(e).to.have.property('budget', `\$${data.budget}`);
+                });
+                done();
+            });
+    });
 });

@@ -21,6 +21,17 @@ class Model {
     `;
     return this.pool.query(query); 
   }
+
+  async update(columns, values, clause) {
+    let query = `UPDATE ${this.table} SET `;
+    for (let i = 0; i < columns.length; i += 1) {
+      query += `${columns[i]} = '${values[i]}'`;
+      if (i < columns.length - 1) query += ', ';
+    }
+    query += clause;
+    query += ' RETURNING id, category, budget;';
+    return this.pool.query(query);
+  }
 }
 
 export default Model;
