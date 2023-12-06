@@ -89,4 +89,25 @@ describe('Envelopes', () => {
                 done();
             });   
     });
+    it('transfers money from one envelope to another', done => {
+        const data = { from: 2, to: 3, amount: 50 };
+        server
+            .post(`${BASE_URL}/envelopes/transfer`)
+            .send(data)
+            .expect(200)
+            .end((err, res) => {
+                expect(res.status).to.equal(200);
+                console.log(res.body)
+                expect(res.body.envelopes).to.be.instanceOf(Array);
+                // Default test database has envelopes with ids 1 and 2 with budgets of $500 and $100 respectively therefore
+                // the expected budgets after the transfer are $450 and $150 respectively. 
+                expect(res.body.envelopes[0]).to.have.property('id', data.from);
+                expect(res.body.envelopes[0]).to.have.property('category', 'gas');
+                expect(res.body.envelopes[0]).to.have.property('budget', '$50.00');
+                expect(res.body.envelopes[1]).to.have.property('id', data.to);
+                expect(res.body.envelopes[1]).to.have.property('category', 'electric');
+                expect(res.body.envelopes[1]).to.have.property('budget', '$100.00');
+                done();
+            });
+    });
 });

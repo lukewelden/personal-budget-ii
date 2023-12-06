@@ -29,7 +29,6 @@ class Model {
       if (i < columns.length - 1) query += ', ';
     }
     query += clause;
-    query += ' RETURNING id, category, budget;';
     return this.pool.query(query);
   }
 
